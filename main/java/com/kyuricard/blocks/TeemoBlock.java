@@ -6,11 +6,11 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
@@ -24,13 +24,8 @@ public class TeemoBlock extends Block {
 	
 	@Override
 	public void onBlockClicked(World arg0, BlockPos arg1, EntityPlayer arg2) {
-		try {	
-			arg0.playSoundAtEntity(arg2, "alumod:teemo", 1.0f, 1.0f);
-			MinecraftServer.getServer().getCommandManager().executeCommand(MinecraftServer.getServer(), "kill @e");		
-			arg0.destroyBlock(arg1, true);
-		} catch (ConcurrentModificationException cme) {
-			Minecraft.getMinecraft().thePlayer.sendChatMessage("Teemo is with us");
-		} 		
+		arg2.addPotionEffect(new PotionEffect(Potion.wither.id, 120, 5));
+		arg2.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 120, 3));
 	}
 	
 	@Override
